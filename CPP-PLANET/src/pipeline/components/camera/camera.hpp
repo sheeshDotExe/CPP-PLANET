@@ -3,9 +3,27 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+enum CameraMovement
+{
+	FORWARD,
+	BACKWARD,
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+};
+
 class Camera {
 public:
-	Camera(float x, float y, float z, float movementSpeed, float mouseSensitivityX, float mouseSensitivityY, float zoom);
+	Camera();
+	void init(float x, float y, float z, float movementSpeed, float mouseSensitivityX, float mouseSensitivityY, float zoom);
+	void createProjectionMatrix();
+	glm::mat4 getViewMatrix();
+	void processMouseMovement(float xoffset, float yoffset, bool constrainPitch);
+	void processMouseScroll(float yoffset);
+	void processKeyboardInput(enum CameraMovement direction, float deltaTime);
+
+	float movementSpeed;
 private:
 	void updateVectors();
 
@@ -17,7 +35,6 @@ private:
 	glm::mat4 projectionMatrix;
 	float yaw;
 	float pitch;
-	float movementSpeed;
 	float mouseSensitivityX;
 	float mouseSensitivityY;
 	float zoom;

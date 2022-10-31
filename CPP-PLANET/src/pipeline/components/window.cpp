@@ -2,6 +2,7 @@
 
 int firstMouse = true;
 float lastX, lastY;
+Camera camera;
 
 static void _size_callback(GLFWwindow* windowW, int width, int height) {
 	glViewport(0, 0, width, height);
@@ -24,16 +25,46 @@ static void _mouse_callback(GLFWwindow* windowW, double xposIn, double yposIn) {
 	lastX = xpos;
 	lastY = ypos;
 
-	//processMouseMovement(&window.camera, xoffset, yoffset, true);
-	//camera.ProcessMouseMovement(xoffset, yoffset);
+	camera.processMouseMovement(xoffset, yoffset, true);
 }
 
 static void _scroll_callback(GLFWwindow* windowW, double xoffset, double yoffset) {
-	//processMouseScroll(&window.camera, (float)yoffset);
-	//camera.ProcessMouseScroll((float)yoffset);
+	camera.processMouseScroll((float)yoffset);
 }
 
 static void _key_callback(GLFWwindow* window, int button, int action, int mods) {
+}
+
+void Window::processInput(float deltaTime) {
+	if (glfwGetKey(windowHandle, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(windowHandle, true);
+	}
+
+	if (glfwGetKey(windowHandle, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+		camera.movementSpeed = 45.0f * 2;
+	}
+	else {
+		camera.movementSpeed = 45.0f;
+	}
+
+	if (glfwGetKey(windowHandle, GLFW_KEY_W) == GLFW_PRESS) {
+		camera.processKeyboardInput(FORWARD, deltaTime);
+	}
+	if (glfwGetKey(windowHandle, GLFW_KEY_S) == GLFW_PRESS) {
+		camera.processKeyboardInput(BACKWARD, deltaTime);
+	}
+	if (glfwGetKey(windowHandle, GLFW_KEY_A) == GLFW_PRESS) {
+		camera.processKeyboardInput(LEFT, deltaTime);
+	}
+	if (glfwGetKey(windowHandle, GLFW_KEY_D) == GLFW_PRESS) {
+		camera.processKeyboardInput(RIGHT, deltaTime);
+	}
+	if (glfwGetKey(windowHandle, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		camera.processKeyboardInput(UP, deltaTime);
+	}
+	if (glfwGetKey(windowHandle, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+		camera.processKeyboardInput(DOWN, deltaTime);
+	}
 }
 
 Window::Window() {
@@ -66,6 +97,8 @@ int Window::initWindow(int width, int height) {
 		return 1;
 	}
 	glEnable(GL_DEPTH_TEST);
+
+	camera.init(0.0f, 0.0f, 0.0f, 4.5f, 0.1f, 0.1f, 45.0f);
 
 	return 0;
 }

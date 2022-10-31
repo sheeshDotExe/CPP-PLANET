@@ -10,7 +10,7 @@ public:
 	int initWindow(int width, int height);
 	bool shouldClose();
 	void swapBuffer();
-	Camera camera;
+	void processInput(float deltaTime);
 private:
 	int width, height;
 	GLFWwindow* windowHandle;

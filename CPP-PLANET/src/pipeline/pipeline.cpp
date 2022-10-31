@@ -41,6 +41,8 @@ int Renderer::init() {
 
 bool Renderer::render() {
 	if (!window.shouldClose()) {
+		window.processInput(1);
+
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
