@@ -83,8 +83,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Viktor\Documents\cpp\opengl\CPP-PLANET\CPP-PLANET\includes;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Viktor\Documents\cpp\opengl\CPP-PLANET\CPP-PLANET\libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\viktor\Documents\programmering-c\CPP-PLANET\CPP-PLANET\includes;C:\Users\Viktor\Documents\cpp\opengl\CPP-PLANET\CPP-PLANET\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\viktor\Documents\programmering-c\CPP-PLANET\CPP-PLANET\libraries;C:\Users\Viktor\Documents\cpp\opengl\CPP-PLANET\CPP-PLANET\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -150,6 +150,8 @@
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\pipeline\components\camera\camera.cpp" />
+    <ClCompile Include="src\pipeline\components\mesh\mesh.cpp" />
+    <ClCompile Include="src\pipeline\components\shader\shader.cpp" />
     <ClCompile Include="src\pipeline\components\window.cpp" />
     <ClCompile Include="src\pipeline\pipeline.cpp" />
   </ItemGroup>
@@ -442,6 +444,8 @@
     <ClInclude Include="includes\KHR\khrplatform.h" />
     <ClInclude Include="src\components\planets\planets.hpp" />
     <ClInclude Include="src\pipeline\components\camera\camera.hpp" />
+    <ClInclude Include="src\pipeline\components\mesh\mesh.hpp" />
+    <ClInclude Include="src\pipeline\components\shader\shader.hpp" />
     <ClInclude Include="src\pipeline\components\window.hpp" />
     <ClInclude Include="src\pipeline\pipeline.hpp" />
   </ItemGroup>
@@ -582,6 +586,8 @@
     <None Include="includes\glm\gtx\vector_angle.inl" />
     <None Include="includes\glm\gtx\vector_query.inl" />
     <None Include="includes\glm\gtx\wrap.inl" />
+    <None Include="src\pipeline\components\shader\glsl\fragmentShader.glsl" />
+    <None Include="src\pipeline\components\shader\glsl\vertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

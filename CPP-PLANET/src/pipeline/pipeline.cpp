@@ -36,6 +36,7 @@ Renderer::Renderer() {
 int Renderer::init() {
 	std::cout << options.width << " : " << options.height << "\n";
 	window.initWindow(options.width, options.height);
+	shader.initShader("C:/Users/viktor/Documents/programmering-c/CPP-PLANET/CPP-PLANET/src/pipeline/components/shader/glsl/vertexShader.glsl", "C:/Users/viktor/Documents/programmering-c/CPP-PLANET/CPP-PLANET/src/pipeline/components/shader/glsl/fragmentShader.glsl");
 	return 0;
 }
 

@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "components/shader/shader.hpp"
 namespace Pipeline {
 
 #define DEFAULT_WIDTH 1920
@@ -20,6 +21,7 @@ namespace Pipeline {
 		bool render();
 	private:
 		struct PipelineOptions options;
+		Shader shader;
 		Window window;
 		int init();
 	};
