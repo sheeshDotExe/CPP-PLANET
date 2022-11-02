@@ -1,10 +1,15 @@
 #pragma once
-#include "components/window.hpp"
-#include <iostream>
-#include <Windows.h>
+#include <windows.h>
+#include <winUser.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <io.h>
+#include <stdio.h>
+#include <direct.h>
+#include "components/window.hpp"
 #include "components/shader/shader.hpp"
+#include "components/camera/camera.hpp"
+#include "components/mesh/mesh.hpp"
 namespace Pipeline {
 
 #define DEFAULT_WIDTH 1920
@@ -12,6 +17,9 @@ namespace Pipeline {
 	
 	struct PipelineOptions {
 		int width, height, fps;
+		char* vertexShaderPath;
+		char* fragmentShaderPath;
+		char* spritemapPath;
 	};
 
 	class Renderer {

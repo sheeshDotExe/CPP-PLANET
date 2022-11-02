@@ -61,7 +61,6 @@ void Camera::processMouseScroll(float yoffset) {
 		zoom = 90.0f;
 	}
 	createProjectionMatrix();
-	//setProjectionMatrix(camera);
 }
 
 void Camera::processKeyboardInput(enum CameraMovement direction, float deltaTime) {

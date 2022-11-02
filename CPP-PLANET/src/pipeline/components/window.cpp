@@ -114,3 +114,12 @@ void Window::swapBuffer() {
 	glfwSwapBuffers(windowHandle);
 	glfwPollEvents();
 }
+
+
+void Window::setViewMatrix(Shader shader) {
+	shader.setMat4("view", camera.getViewMatrix());
+}
+
+void Window::setProjectionMatrix(Shader shader) {
+	shader.setMat4("projection", camera.projectionMatrix);
+}

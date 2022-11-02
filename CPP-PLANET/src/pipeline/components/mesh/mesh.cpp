@@ -6,6 +6,13 @@ Mesh::Mesh() {
 	glBindVertexArray(0);
 }
 
+std::vector<Vertex> createVertexVector(float*values, int size) {
+	std::vector<Vertex> outArr;
+	for (int i = 0; i < size; i += sizeof(Vertex) / sizeof(float)) {
+		outArr.push_back((Vertex) {});
+	}
+};
+
 void Mesh::setupMesh(std::vector<Vertex> vertices) {
 	this->vertices = vertices;
 	glBindVertexArray(this->VAO);

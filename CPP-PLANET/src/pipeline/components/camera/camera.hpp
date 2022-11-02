@@ -24,6 +24,7 @@ public:
 	void processKeyboardInput(enum CameraMovement direction, float deltaTime);
 
 	float movementSpeed;
+	glm::mat4 projectionMatrix;
 private:
 	void updateVectors();
 
@@ -32,7 +33,6 @@ private:
 	glm::vec3 up;
 	glm::vec3 right;
 	glm::vec3 worldUp;
-	glm::mat4 projectionMatrix;
 	float yaw;
 	float pitch;
 	float mouseSensitivityX;
