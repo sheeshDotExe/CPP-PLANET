@@ -3,6 +3,52 @@
 #pragma warning(disable : 4996)
 using namespace Pipeline;
 
+float vertices[] = {
+		-0.5f, -0.5f, -0.5f, 0, 0, 0,  0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,0, 0, 0,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,0, 0, 0,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f
+};
+
+Mesh test;
+
 static void _getInfo(struct PipelineOptions* options) {
 	int width = GetSystemMetrics(SM_CXFULLSCREEN);
 	if (width == 0) {
@@ -69,55 +115,9 @@ int Renderer::init() {
 	std::cout << options.width << " : " << options.height << "\n";
 	window.initWindow(options.width, options.height);
 	shader.initShader(options.vertexShaderPath, options.fragmentShaderPath);
-	window.setProjectionMatrix(shader);
+	test.setupMesh(createVertexVector(vertices, 36*8));
 	return 0;
 }
-
-float vertices[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-};
-
-Mesh test();
 
 bool Renderer::render() {
 	if (!window.shouldClose()) {
@@ -126,7 +126,13 @@ bool Renderer::render() {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		window.setViewMatrix(this->shader);
+		window.setProjectionMatrix(shader);
+		window.setViewMatrix(shader);
+
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(0,0,0));
+		shader.setMat4("model", model);
+		test.draw();
 
 		window.swapBuffer();
 		return true;

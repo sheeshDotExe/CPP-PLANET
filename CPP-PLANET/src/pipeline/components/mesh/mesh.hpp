@@ -18,10 +18,12 @@ public:
 	Mesh();
 	void setupMesh(std::vector<Vertex> vertices);
 	void draw();
-private:
 	GLuint VAO;
 	GLuint VBO;
+private:
 	GLsizei size;
 	std::vector<Vertex> vertices;
 
 };
+
+std::vector<Vertex> createVertexVector(float* values, int size);
