@@ -3,51 +3,6 @@
 Mesh::Mesh() {
 }
 
-std::vector<float> verticesW = {
-		-0.5f, -0.5f, -0.5f, 0, 0, 0,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f
-};
-
-
 std::vector<Vertex> createVertexVector(float*values, int size) {
 	std::vector<Vertex> outArr;
 	for (int i = 0; i < size; i += sizeof(Vertex) / sizeof(float)) {
@@ -61,28 +16,26 @@ void Mesh::setupMesh(std::vector<Vertex> vertices) {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 
-	//this->vertices = vertices;
+	this->vertices = vertices;
 	glBindVertexArray(this->VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
 
-	std::cout << this->VAO << "\n";
-
-	glBufferData(GL_ARRAY_BUFFER, verticesW.size() * sizeof(float), &verticesW[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3*sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 	
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6*sizeof(float)));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoord));
 
 	glBindVertexArray(0);
 }
 
 void Mesh::draw() {
 	glBindVertexArray(this->VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glBindVertexArray(0);
 }

@@ -9,10 +9,10 @@ void Camera::init(float x, float y, float z, float movementSpeed, float mouseSen
 	worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	yaw = -90.0f;
 	pitch = 0.0f;
-	movementSpeed = movementSpeed;
-	mouseSensitivityX = mouseSensitivityX;
-	mouseSensitivityY = mouseSensitivityY;
-	zoom = zoom;
+	this->movementSpeed = movementSpeed;
+	this->mouseSensitivityX = mouseSensitivityX;
+	this->mouseSensitivityY = mouseSensitivityY;
+	this->zoom = zoom;
 	updateVectors();
 	createProjectionMatrix();
 }
@@ -30,7 +30,7 @@ void Camera::updateVectors() {
 }
 
 void Camera::createProjectionMatrix() {
-	projectionMatrix = glm::perspective(glm::radians(zoom), 1440.0f / 1080.0f, 0.1f, 1000.0f);
+	projectionMatrix = glm::perspective(glm::radians(zoom), 800.0f / 600.0f, 0.1f, 100.0f);
 }
 
 glm::mat4 Camera::getViewMatrix() {

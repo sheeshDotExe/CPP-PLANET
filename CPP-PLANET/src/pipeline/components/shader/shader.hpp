@@ -76,13 +76,6 @@ public:
     // ------------------------------------------------------------------------
     void setMat4(const std::string& name, const glm::mat4& mat) const
     {
-        for (int i = 0; i < 4; i++) {
-            for (int y = 0; y < 4; y++) {
-                std::cout << mat[i][y] << " ";
-            }
-            std::cout << "\n";
-        }
-        std::cout << "\n";
         glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 

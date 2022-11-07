@@ -152,6 +152,7 @@
     <ClCompile Include="src\pipeline\components\camera\camera.cpp" />
     <ClCompile Include="src\pipeline\components\mesh\mesh.cpp" />
     <ClCompile Include="src\pipeline\components\shader\shader.cpp" />
+    <ClCompile Include="src\pipeline\components\shapes\sphere.cpp" />
     <ClCompile Include="src\pipeline\components\window.cpp" />
     <ClCompile Include="src\pipeline\pipeline.cpp" />
   </ItemGroup>
@@ -446,6 +447,7 @@
     <ClInclude Include="src\pipeline\components\camera\camera.hpp" />
     <ClInclude Include="src\pipeline\components\mesh\mesh.hpp" />
     <ClInclude Include="src\pipeline\components\shader\shader.hpp" />
+    <ClInclude Include="src\pipeline\components\shapes\sphere.hpp" />
     <ClInclude Include="src\pipeline\components\window.hpp" />
     <ClInclude Include="src\pipeline\pipeline.hpp" />
   </ItemGroup>
