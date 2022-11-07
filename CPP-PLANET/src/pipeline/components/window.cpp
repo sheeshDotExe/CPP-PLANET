@@ -116,10 +116,10 @@ void Window::swapBuffer() {
 }
 
 
-void Window::setViewMatrix(Shader shader) {
+void Window::setViewMatrix(Shader &shader) {
 	shader.setMat4("view", camera.getViewMatrix());
 }
 
-void Window::setProjectionMatrix(Shader shader) {
+void Window::setProjectionMatrix(Shader &shader) {
 	shader.setMat4("projection", camera.projectionMatrix);
 }

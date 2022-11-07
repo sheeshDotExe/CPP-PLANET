@@ -18,10 +18,14 @@ void Camera::init(float x, float y, float z, float movementSpeed, float mouseSen
 }
 
 void Camera::updateVectors() {
-	front = glm::normalize(glm::vec3(glm::cos(glm::radians(yaw)) * glm::cos(glm::radians(pitch)),
-		glm::sin(glm::radians(pitch))
-		,glm::sin(glm::radians(yaw)) * glm::cos(glm::radians(pitch))));
-	right = glm::normalize(glm::cross(front, worldUp));
+	// calculate the new Front vector
+	glm::vec3 newFront;
+	newFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	newFront.y = sin(glm::radians(pitch));
+	newFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front = glm::normalize(newFront);
+	// also re-calculate the Right and Up vector
+	right = glm::normalize(glm::cross(front, worldUp)); // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 	up = glm::normalize(glm::cross(right, front));
 }
 
@@ -63,7 +67,7 @@ void Camera::processMouseScroll(float yoffset) {
 	createProjectionMatrix();
 }
 
-void Camera::processKeyboardInput(enum CameraMovement direction, float deltaTime) {
+void Camera::processKeyboardInput(CameraMovement direction, float deltaTime) {
 	float velocity = movementSpeed * deltaTime;
 
 	if (direction == FORWARD)
@@ -80,13 +84,3 @@ void Camera::processKeyboardInput(enum CameraMovement direction, float deltaTime
 		position -= glm::vec3( 0, 1, 0 ) * velocity;
 
 }
-
-/*
-void setProjectionMatrix(Shader shader) {
-	setMat4(shader, (char*)"projection", camera->projectionMatrix);
-}
-
-void setViewMatrix(Shader shader) {
-	setMat4(shader, (char*)"view", getViewMatrix(camera));
-}
-*/

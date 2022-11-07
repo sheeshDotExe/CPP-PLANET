@@ -21,7 +21,7 @@ public:
 	glm::mat4 getViewMatrix();
 	void processMouseMovement(float xoffset, float yoffset, bool constrainPitch);
 	void processMouseScroll(float yoffset);
-	void processKeyboardInput(enum CameraMovement direction, float deltaTime);
+	void processKeyboardInput(CameraMovement direction, float deltaTime);
 
 	float movementSpeed;
 	glm::mat4 projectionMatrix;

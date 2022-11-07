@@ -121,16 +121,16 @@ int Renderer::init() {
 
 bool Renderer::render() {
 	if (!window.shouldClose()) {
-		window.processInput(1);
+		window.processInput(0.001);
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		window.setProjectionMatrix(shader);
+		//window.setProjectionMatrix(shader);
 		window.setViewMatrix(shader);
 
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0,0,0));
+		model = glm::translate(model, glm::vec3(0,0,-5));
 		shader.setMat4("model", model);
 		test.draw();
 

@@ -11,8 +11,8 @@ public:
 	bool shouldClose();
 	void swapBuffer();
 	void processInput(float deltaTime);
-	void setViewMatrix(Shader shader);
-	void setProjectionMatrix(Shader shader);
+	void setViewMatrix(Shader &shader);
+	void setProjectionMatrix(Shader &shader);
 private:
 	int width, height;
 	GLFWwindow* windowHandle;
