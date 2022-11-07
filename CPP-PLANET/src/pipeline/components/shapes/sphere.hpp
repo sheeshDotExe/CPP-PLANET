@@ -1,12 +1,26 @@
 #pragma once
 #include "../mesh/mesh.hpp"
+#include <iostream>
+
+class TerrainFace {
+public:
+	TerrainFace(glm::vec3 localUp);
+	void constructMesh();
+	int resolution = 10;
+	glm::vec3 localUp;
+	glm::vec3 axisA;
+	glm::vec3 axisB;
+
+};
 
 class Sphere {
 public:
-	Sphere();
+	Sphere() {
+	};
 	void createSphere(float radius, float mass, glm::vec3 initialVelocity);
-private:
 	float radius, mass;
 	glm::vec3 velocity;
+	std::vector<TerrainFace> terrainFaces;
 	Mesh mesh();
+private:
 };
