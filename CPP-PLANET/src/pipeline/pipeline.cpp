@@ -3,52 +3,6 @@
 #pragma warning(disable : 4996)
 using namespace Pipeline;
 
-float vertices[] = {
-		-0.5f, -0.5f, -0.5f, 0, 0, 0,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,0, 0, 0,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,0, 0, 0,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,0, 0, 0,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,0, 0, 0,  0.0f, 1.0f
-};
-
-Mesh test;
-
 static void _getInfo(struct PipelineOptions* options) {
 	int width = GetSystemMetrics(SM_CXFULLSCREEN);
 	if (width == 0) {
@@ -111,11 +65,25 @@ Renderer::Renderer() {
 	init();
 }
 
+std::vector<glm::vec3> vertices = {
+	 glm::vec3(0.5f,  0.5f, 0.0f),  // top right
+	 glm::vec3(0.5f, -0.5f, 0.0f),  // bottom right
+	glm::vec3(-0.5f, -0.5f, 0.0f),  // bottom left
+	glm::vec3(-0.5f,  0.5f, 0.0f)   // top left 
+};
+std::vector<unsigned int> indices = {  // note that we start from 0!
+	0, 1, 3,   // first triangle
+	1, 2, 3    // second triangle
+};
+
 int Renderer::init() {
 	std::cout << options.width << " : " << options.height << "\n";
 	window.initWindow(options.width, options.height);
 	shader.initShader(options.vertexShaderPath, options.fragmentShaderPath);
-	test.setupMesh(createVertexVector(vertices, 36*8));
+
+	shader.setVec3("lightPos", glm::vec3(0, 0, 10));
+
+	test.createSphere(5.0f, 1.0f, glm::vec3(1, 1, 1));
 	return 0;
 }
 
@@ -133,7 +101,11 @@ bool Renderer::render() {
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0,0,0));
 		shader.setMat4("model", model);
-		test.draw();
+
+		
+		for (int i = 0; i < test.terrainMeshes.size(); i++) {
+			test.terrainMeshes[i].draw();
+		}
 
 		window.swapBuffer();
 		return true;

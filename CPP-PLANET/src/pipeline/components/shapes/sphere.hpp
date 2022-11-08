@@ -5,7 +5,7 @@
 class TerrainFace {
 public:
 	TerrainFace(glm::vec3 localUp);
-	void constructMesh();
+	void constructMesh(Mesh &mesh, float radius);
 	int resolution = 10;
 	glm::vec3 localUp;
 	glm::vec3 axisA;
@@ -21,6 +21,6 @@ public:
 	float radius, mass;
 	glm::vec3 velocity;
 	std::vector<TerrainFace> terrainFaces;
-	Mesh mesh();
+	std::vector<Mesh> terrainMeshes;
 private:
 };
