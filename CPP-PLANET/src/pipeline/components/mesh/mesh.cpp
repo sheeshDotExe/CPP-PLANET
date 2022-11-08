@@ -36,6 +36,8 @@ std::vector<Vertex> generateTriangles(std::vector<Vertex> vertices, std::vector<
 		normal.y = U.z * V.x - U.x * V.z;
 		normal.z = U.x * V.y - U.y * V.x;
 
+		normal = glm::normalize(normal);
+
 		outArr.push_back(Vertex{ p1, normal, glm::vec2(0, 0) });
 		outArr.push_back(Vertex{ p2, normal, glm::vec2(0, 0) });
 		outArr.push_back(Vertex{ p3, normal, glm::vec2(0, 0) });

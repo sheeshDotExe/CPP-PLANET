@@ -65,31 +65,31 @@ Renderer::Renderer() {
 	init();
 }
 
-std::vector<glm::vec3> vertices = {
-	 glm::vec3(0.5f,  0.5f, 0.0f),  // top right
-	 glm::vec3(0.5f, -0.5f, 0.0f),  // bottom right
-	glm::vec3(-0.5f, -0.5f, 0.0f),  // bottom left
-	glm::vec3(-0.5f,  0.5f, 0.0f)   // top left 
-};
-std::vector<unsigned int> indices = {  // note that we start from 0!
-	0, 1, 3,   // first triangle
-	1, 2, 3    // second triangle
-};
-
 int Renderer::init() {
 	std::cout << options.width << " : " << options.height << "\n";
 	window.initWindow(options.width, options.height);
 	shader.initShader(options.vertexShaderPath, options.fragmentShaderPath);
 
-	shader.setVec3("lightPos", glm::vec3(0, 0, 10));
-
 	test.createSphere(5.0f, 1.0f, glm::vec3(1, 1, 1));
 	return 0;
 }
 
+float var = 0;
+float sp = 1;
+
 bool Renderer::render() {
 	if (!window.shouldClose()) {
-		window.processInput(0.001);
+
+		float currentFrame = static_cast<float>(glfwGetTime());
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+		shader.setVec3("lightPos", glm::vec3(-30 + var, -1.0f + var, -0.3f));
+		//shader.setVec3("lightPos", glm::vec3(-var, 0, 0));
+
+		var += sp * deltaTime;
+
+		window.processInput(deltaTime);
 		shader.use();
 
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);

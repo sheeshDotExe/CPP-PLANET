@@ -99,6 +99,7 @@ int Window::initWindow(int width, int height) {
 	glEnable(GL_DEPTH_TEST);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glEnable(GL_FRAMEBUFFER_SRGB);
 
 	camera.init(0.0f, 0.0f, 10.0f, 4.5f, 0.1f, 0.1f, 45.0f);
 

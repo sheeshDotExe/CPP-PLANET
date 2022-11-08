@@ -34,6 +34,8 @@ namespace Pipeline {
 		struct PipelineOptions options;
 		Shader shader;
 		Window window;
+		float deltaTime = 0.0f;
+		float lastFrame = 0.0f;
 		int init();
 	};
 }
