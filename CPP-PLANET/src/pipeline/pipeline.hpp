@@ -11,6 +11,7 @@
 #include "components/camera/camera.hpp"
 #include "components/mesh/mesh.hpp"
 #include "components/shapes/sphere.hpp"
+#include "components/shapes/shapeContainer.hpp"
 namespace Pipeline {
 
 #define DEFAULT_WIDTH 1920
@@ -27,15 +28,11 @@ namespace Pipeline {
 	public:
 		Renderer(int width, int height, int fps);
 		Renderer();
-		bool render();
-
-		Sphere test;
+		bool render(ShapeContainer &shapes, float deltaTime);
 	private:
 		struct PipelineOptions options;
 		Shader shader;
 		Window window;
-		float deltaTime = 0.0f;
-		float lastFrame = 0.0f;
 		int init();
 	};
 }

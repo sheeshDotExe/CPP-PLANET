@@ -447,6 +447,7 @@
     <ClInclude Include="src\pipeline\components\camera\camera.hpp" />
     <ClInclude Include="src\pipeline\components\mesh\mesh.hpp" />
     <ClInclude Include="src\pipeline\components\shader\shader.hpp" />
+    <ClInclude Include="src\pipeline\components\shapes\shapeContainer.hpp" />
     <ClInclude Include="src\pipeline\components\shapes\sphere.hpp" />
     <ClInclude Include="src\pipeline\components\window.hpp" />
     <ClInclude Include="src\pipeline\pipeline.hpp" />

@@ -6,7 +6,7 @@ TerrainFace::TerrainFace(glm::vec3 localUp) {
 	this->axisB = glm::cross(localUp, this->axisA);
 }
 
-void TerrainFace::constructMesh(Mesh &mesh, float radius) {
+void TerrainFace::constructMesh(Mesh &mesh, float radius, int resolution) {
 	std::vector<glm::vec3> vertices;
 	std::vector<unsigned int> triangles;
 
@@ -33,19 +33,19 @@ void TerrainFace::constructMesh(Mesh &mesh, float radius) {
 	mesh.setupMesh(cmpVertices(vertices), triangles);
 }
 
-void Sphere::createSphere(float radius, float mass, glm::vec3 initialVelocity) {
+void Sphere::createSphere(float radius, float mass, int resolution, glm::vec3 initialVelocity, glm:: vec3 startingPosition) {
 	this->radius = radius;
 	this->mass = mass;
 	this->velocity = initialVelocity;
+	this->position = startingPosition;
+	this->acceleration = glm::vec3(0, 0, 0);
 
 	std::vector<glm::vec3> directions = { glm::vec3(0,1,0),glm::vec3(0,-1,0) ,glm::vec3(1,0,0) ,glm::vec3(-1,0,0) ,glm::vec3(0,0,1) ,glm::vec3(0,0,-1) };
-
-	std::cout << directions.size();
 
 	for (int i = 0; i < directions.size(); i++) {
 		terrainFaces.push_back(TerrainFace(directions[i]));
 		terrainMeshes.push_back(Mesh());
-		terrainFaces[i].constructMesh(terrainMeshes[i], this->radius);
+		terrainFaces[i].constructMesh(terrainMeshes[i], this->radius, resolution);
 	}
 
 }

@@ -69,25 +69,13 @@ int Renderer::init() {
 	std::cout << options.width << " : " << options.height << "\n";
 	window.initWindow(options.width, options.height);
 	shader.initShader(options.vertexShaderPath, options.fragmentShaderPath);
-
-	test.createSphere(5.0f, 1.0f, glm::vec3(1, 1, 1));
 	return 0;
 }
 
-float var = 0;
-float sp = 1;
-
-bool Renderer::render() {
+bool Renderer::render(ShapeContainer &shapes, float deltaTime) {
 	if (!window.shouldClose()) {
 
-		float currentFrame = static_cast<float>(glfwGetTime());
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-
-		shader.setVec3("lightPos", glm::vec3(-30 + var, -1.0f + var, -0.3f));
-		//shader.setVec3("lightPos", glm::vec3(-var, 0, 0));
-
-		var += sp * deltaTime;
+		shader.setVec3("lightPos", glm::vec3(0, 0, 0));
 
 		window.processInput(deltaTime);
 		shader.use();
@@ -98,14 +86,26 @@ bool Renderer::render() {
 		window.setProjectionMatrix(shader);
 		window.setViewMatrix(shader);
 
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0,0,0));
-		shader.setMat4("model", model);
-
-		
-		for (int i = 0; i < test.terrainMeshes.size(); i++) {
-			test.terrainMeshes[i].draw();
+		for (int i = 0; i < shapes.spheres.size(); i++) {
+			Sphere* current = &shapes.spheres[i];
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, current->position);
+			shader.setMat4("model", model);
+			for (int side = 0; side < current->terrainMeshes.size(); side++) {
+				current->terrainMeshes[side].draw();
+			}
 		}
+
+		for (int i = 0; i < shapes.points.size(); i++) {
+			Sphere* current = &shapes.points[i];
+			glm::mat4 model = glm::mat4(1.0f);
+			model = glm::translate(model, current->position);
+			shader.setMat4("model", model);
+			for (int side = 0; side < current->terrainMeshes.size(); side++) {
+				current->terrainMeshes[side].draw();
+			}
+		}
+
 
 		window.swapBuffer();
 		return true;
