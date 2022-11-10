@@ -15,4 +15,5 @@ private:
 	Pipeline::Renderer pipeline;
 	void physicsCalculations();
 	void rayTrack(Sphere& sphere, int steps, float speed);
+	void newRayTrack();
 };

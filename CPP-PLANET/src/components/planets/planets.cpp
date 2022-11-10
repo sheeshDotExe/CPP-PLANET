@@ -3,8 +3,9 @@
 
 float GravitationalConstant = 6.67430;
 
-float Acc = 0.000001;
-int Points = 10000000;
+float Acc = 0.004;
+int Points = 100000;
+int numOfPoints = 200;
 
 float sqrMagnitude(glm::vec3 in){
 	return in.x * in.x + in.y * in.y + in.z * in.z;
@@ -25,6 +26,7 @@ void Simulation::rayTrack(Sphere& sphere, int steps, float speed) {
 	}
 
 	for (int i = 0; i < steps; i++) {
+		
 		for (int i = 0; i < sim.size(); i++) {
 			Sphere* current = &sim[i];
 			for (int otherI = 0; otherI < sim.size(); otherI++) {
@@ -33,14 +35,17 @@ void Simulation::rayTrack(Sphere& sphere, int steps, float speed) {
 					glm::vec3 distance = (other->position - current->position);
 					glm::vec3 forceDirection = glm::normalize(other->position - current->position);
 					glm::vec3 force = forceDirection * GravitationalConstant * other->mass / sqrMagnitude(distance);
-					current->velocity += force * deltaTime;
+					current->velocity += force * speed;
 				}
 			}
 		}
+		
+		
 		for (int i = 0; i < sim.size(); i++) {
 			Sphere* current = &sim[i];
-			current->position += current->velocity * deltaTime;
+			current->position += current->velocity * speed;
 		}
+		
 
 		for (int otherI = 0; otherI < sim.size(); otherI++) {
 			Sphere* other = &sim[otherI];
@@ -50,10 +55,9 @@ void Simulation::rayTrack(Sphere& sphere, int steps, float speed) {
 			velo += force * speed;
 		}
 		pos += velo * speed;
-		if (i % (Points / 1000) == 0) {
-			std::cout << i << "\n";
+		if (i % (Points / numOfPoints) == 0) {
 			Sphere point = Sphere();
-			point.createSphere(0.5, 0, 4, glm::vec3(0, 0, 0), coords[i]);
+			point.createSphere(0.5, 0, 4, glm::vec3(0, 0, 0), pos);
 			shapes.points.push_back(point);
 		}
 	}
@@ -95,8 +99,13 @@ Simulation::Simulation() {
 	rayTrack(moon, Points, Acc);
 }
 
+void Simulation::newRayTrack() {
+	std::vector<Sphere>().swap(shapes.points);
+	rayTrack(shapes.spheres[0], Points, Acc);
+	rayTrack(shapes.spheres[1], Points, Acc);
+}
+
 int Simulation::run() {
-	std::cout << "ok\n";
 	bool running = true;
 	bool physics = false;
 	while (running) {
@@ -104,15 +113,19 @@ int Simulation::run() {
 
 		if (GetAsyncKeyState(0x46) & 1){
 			shapes.spheres[0].velocity.z += 1;
-			shapes.points.clear();
-			rayTrack(shapes.spheres[0], Points, Acc);
-			rayTrack(shapes.spheres[1], Points, Acc);
+			newRayTrack();
 		}
 		if (GetAsyncKeyState(0x47) & 1) {
 			shapes.spheres[0].velocity.z -= 1;
-			shapes.points.clear();
-			rayTrack(shapes.spheres[0], Points, Acc);
-			rayTrack(shapes.spheres[1], Points, Acc);
+			newRayTrack();
+		}
+		if (GetAsyncKeyState(0x4A) & 1) {
+			shapes.spheres[0].position.x += 10;
+			newRayTrack();
+		}
+		if (GetAsyncKeyState(0x4B) & 1) {
+			shapes.spheres[0].position.x -= 10;
+			newRayTrack();
 		}
 
 		float currentFrame = static_cast<float>(glfwGetTime());
